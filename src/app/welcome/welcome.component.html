@@ -1,0 +1,38 @@
+<div class="min-h-screen flex flex-col">
+  <nav class="bg-sky-800 text-white px-6 py-4 flex justify-between items-center shadow">
+    <div class="">
+      <div class="text-2xl: font-bold tracking-wide">My Dashboard
+        <!--mittlere menü links-->
+        <div class="space-x-6 text-lg hidden md:flex">
+          <a class="hover:text-gray-200" href="#">Dashboard</a>
+          <a class="hover:text-gray-200" href="#">Events</a>
+          <a class="hover:text-gray-200" href="#">Tasks</a>
+          <a class="hover:text-gray-200" href="#">Profil</a>
+        </div>
+      </div>
+
+      <!--User Avatar(rechte Seite) -->
+      <div class="relative-group">
+        <img [src]="user.avatar" alt="Avatar" type="file"
+             class="w-30 h-30 rounded-4xl object-cover border-2 border-white cursor-pointer">
+        <input type="file" (change)="onAvatarSelected($event)" >
+        <div class="px-2 py-2 font-semibold">{{ email() }}&nbsp;&bullet;&nbsp;{{ displayName() }}</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="flex flex-1">
+    <aside class="w-64 bg-gray-900 text-gray-100 p-6 space-y-4 md:block">
+      <div class="text-lg font-semibold md-4">Menu</div>
+      <div class="border-t"></div>
+      <ul class="space-y-2">
+        <li><a class="block px-3 py-2 hover:bg-gray-700 rounded" href="/welcome">Dashboard</a></li>
+        <li><a class="block px-3 py-2 hover:bg-gray-700 rounded" href="#">Meine Events</a></li>
+        <li><a class="block px-3 py-2 hover:bg-gray-700 rounded" href="/todo-list">Tasks</a></li>
+        <li><a class="block px-3 py-2 hover:bg-gray-700 rounded" href="#">Einstellungen</a></li>
+        <li><a class="block px-3 py-2 hover:bg-gray-700 rounded" href="/" (click)="onLogOut()"  >Logout</a></li>
+      </ul>
+
+    </aside>
+  </div>
+</div>
