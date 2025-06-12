@@ -32,12 +32,16 @@ export class AuthService {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
+  public settings(email: string, password: string): Promise<UserCredential> {
+    return createUserWithEmailAndPassword(this.auth, email, password);
+  }
+
   public async login({email, password}: any) {
     await signInWithEmailAndPassword(this.auth, email, password)
       .then(response => {
         console.log(response.user);
         if (response.user) {
-          this.router.navigate(['/welcome']);
+          this.router.navigate(['/dashboardƒ']);
         } else {
           console.error('Login failed')
         }
@@ -49,6 +53,8 @@ export class AuthService {
 
   public async logout() {
     await this.auth.signOut().then(() => {
+      this.userEmail.set(null);
+      this.userDisplayName.set(null);
       this.router.navigate(['/login']);
     });
   }

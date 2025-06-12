@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, inject, OnInit, viewChild} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       try {
         await this.service.login(this.loginForm.value);
-        this.router.navigate(['/welcome']);
+        this.router.navigate(['/dashboard']);
       } catch (error) {
         console.error('login failed', error);
       }

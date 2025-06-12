@@ -8,17 +8,17 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-todo-list',
+  selector: 'app-tasks',
   imports: [
     MatFormFieldModule, MatInputModule, MatSelectModule,  MatTimepickerModule,
     MatDatepickerModule,
     FormsModule,
   ],
-  templateUrl: './todo-list.component.html',
-  styleUrl: './todo-list.component.css',
+  templateUrl: './task.component.html',
+  styleUrl: './task.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoListComponent {
+export class TaskComponent {
   public value: Date;
 
   constructor() {
