@@ -1,29 +1,56 @@
-import { Component } from '@angular/core';
-import {ChangeDetectionStrategy} from '@angular/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatTimepickerModule} from '@angular/material/timepicker';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {FormsModule} from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { TaskService } from '../../services/task.service';
+import { Observable } from 'rxjs';
+import { Task } from '../models/task.model';
+import { NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
+  standalone: true,
   imports: [
-    MatFormFieldModule, MatInputModule, MatSelectModule,  MatTimepickerModule,
-    MatDatepickerModule,
-    FormsModule,
+    FormsModule,CommonModule
   ],
   templateUrl: './task.component.html',
-  styleUrl: './task.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskComponent {
-  public value: Date;
+export class TaskComponent implements OnInit {
 
-  constructor() {
-    this.value = new Date();
+  private taskService = inject(TaskService)
+
+  tasks$: Observable<Task[]> = this.taskService.getTasks();
+
+  newTaskTitle: string = '';
+  newTaskDate: string = new Date().toISOString().substring(0, 10); // YYYY-MM-DD format
+
+
+  ngOnInit(): void {}
+
+  addTask() {
+    if (this.newTaskTitle.trim()) {
+      const newTask: Task = {
+  title: this.newTaskTitle.trim(),
+  description: '', // şimdilik boş geçebilirsin veya yeni input eklersin
+  completed: false,
+  dueDate: new Date(this.newTaskDate),  // Burada new Date yapıyoruz çünkü modelde dueDate: Date
+  priority: 'Medium' // varsayılan değer → istersen Priority input da ekleriz
+};
+      this.taskService.addTask(newTask).then(() => {
+        // Reset inputs after add
+        this.newTaskTitle = '';
+        this.newTaskDate = new Date().toISOString().substring(0, 10);
+      });
+    }
   }
 
+  updateTask(task: Task) {
+    if (task.id) {
+      this.taskService.updateTask(task.id, task);
+    }
+  }
+
+  deleteTask(taskId: string) {
+    this.taskService.deleteTask(taskId);
+  }
 
 }

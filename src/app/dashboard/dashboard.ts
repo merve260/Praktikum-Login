@@ -1,14 +1,21 @@
 import {Component, computed, inject, OnInit, Signal} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TaskComponent } from '../tasks/task.component';
 
 
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    TaskComponent
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -16,6 +23,7 @@ export class Dashboard implements OnInit {
 
   email: Signal<string | null | undefined> = computed(() => this.service.user()?.email);
   displayName: Signal<string | null | undefined> = computed(() => this.service.user()?.displayName);
+  selectedMenu: string = 'dashboard';
 
 
   user = {
